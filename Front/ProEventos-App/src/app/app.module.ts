@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
@@ -11,14 +11,25 @@ import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { NavComponent } from './nav/nav.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { EventoService } from './services/evento.service';
+
+import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EventosComponent,
-      PalestrantesComponent,
-      NavComponent
+    PalestrantesComponent,
+    NavComponent,
+    DateTimeFormatPipe,
    ],
   imports: [
     BrowserModule,
@@ -26,9 +37,22 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     HttpClientModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
+    TooltipModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    ToastrModule.forRoot(
+      {
+        timeOut: 3000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+        progressBar: true
+      }
+    ),
+    NgxSpinnerModule,
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [EventoService],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
